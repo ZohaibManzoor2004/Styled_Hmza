@@ -1,32 +1,33 @@
 import React from "react";
 import { makeStyles } from "@mui/styles";
-import { Card, Theme, Typography } from "@mui/material";
+import {
+  Table,
+  TableBody,
+  TableRow,
+  TableCell,
+  Theme,
+  Typography,
+  Box,
+} from "@mui/material";
 import useApp from "../../hooks/useApp";
 import { mmc_calculation } from "../../utils/MMC";
 import { useLocation } from "react-router";
 
 const useStyles = makeStyles((theme: Theme) => ({
-  root: {},
-  row: {
+  root: {
+    marginTop: theme.spacing(6),
     display: "flex",
+    flexDirection: "column",
     alignItems: "center",
-    gap: 20,
-    justifyContent: "center",
   },
-  subHeading: {
-    // width: 60,
-    color: theme.palette.primary.main,
+  table: {
+    marginTop: theme.spacing(2),
+    maxWidth: 550,
   },
-  wrapper: {
-    display: "grid",
-    gridTemplateColumns: "1fr 1fr",
-    gap: 20,
-    marginTop: 20,
-  },
-  detail: {
-    fontSize: "12px !important",
-    color: "rgba(255,255,255,0.4) !important",
-    fontWeight: "bold !important",
+  header: {
+    backgroundColor: theme.palette.primary.light,
+    color: theme.palette.common.white,
+    fontWeight: 700,
   },
   value: {
     color: theme.palette.success.main,
@@ -41,106 +42,50 @@ const PerformanceMeasures: React.FC<IProps> = ({ performanceMeasures }) => {
   const classes = useStyles();
   const { serverSpecs } = useApp();
   const location = useLocation();
-  console.log(location.pathname);
+
   return (
-    <Card sx={{ p: 2, mt: 2 }} className={classes.root}>
-      <Typography fontWeight={"bold"} variant="h5">
+    <Box className={classes.root}>
+      <Typography fontWeight={"bold"} variant="h5" gutterBottom>
         Performance Measures
       </Typography>
-      <div className={classes.wrapper}>
-        <Card sx={{ p: 1 }} elevation={2}>
-          <div className={classes.row}>
-            <Typography variant="h6" fontWeight={"bold"} className={classes.subHeading}>
-              L:
-            </Typography>
-            <Typography variant="h6" fontWeight={"bold"} className={classes.value}>
-              {performanceMeasures?.l}
-            </Typography>
-          </div>
-          <Typography align="center" className={classes.detail}>
-            Average Customers in System
-          </Typography>
-        </Card>
-        <Card sx={{ p: 1 }} elevation={2}>
-          <div className={classes.row}>
-            <Typography variant="h6" fontWeight={"bold"} className={classes.subHeading}>
-              Lq:
-            </Typography>
-            <Typography variant="h6" fontWeight={"bold"} className={classes.value}>
-              {performanceMeasures?.lq}
-            </Typography>
-          </div>
-          <Typography align="center" className={classes.detail}>
-            Average Customers in Queue
-          </Typography>
-        </Card>
-        <Card sx={{ p: 1 }} elevation={2}>
-          <div className={classes.row}>
-            <Typography variant="h6" fontWeight={"bold"} className={classes.subHeading}>
-              W:
-            </Typography>
-            <Typography variant="h6" fontWeight={"bold"} className={classes.value}>
-              {performanceMeasures?.w} (min)
-            </Typography>
-          </div>
-          <Typography align="center" className={classes.detail}>
-            Average Waiting Customers in System
-          </Typography>
-        </Card>
-        <Card sx={{ p: 1 }} elevation={2}>
-          <div className={classes.row}>
-            <Typography variant="h6" fontWeight={"bold"} className={classes.subHeading}>
-              Wq:
-            </Typography>
-            <Typography variant="h6" fontWeight={"bold"} className={classes.value}>
-              {performanceMeasures?.wq} (min)
-            </Typography>
-          </div>
-          <Typography align="center" className={classes.detail}>
-            Average Waiting Customers in Queue
-          </Typography>
-        </Card>
-        {location.pathname === "/" &&
-          serverSpecs.map((server, i) => (
-            <Card key={i} sx={{ p: 1 }} elevation={2}>
-              <div className={classes.row}>
-                <Typography variant="h6" fontWeight={"bold"} className={classes.subHeading}>
-                  Utlization Server {i + 1}:
-                </Typography>
-                <Typography variant="h6" fontWeight={"bold"} className={classes.value}>
-                  {server.utilization}
-                </Typography>
-              </div>
-            </Card>
-          ))}
-        {/* <Card sx={{ p: 1 }} elevation={2}>
-          <div className={classes.row}>
-            <Typography variant="h6" fontWeight={"bold"} className={classes.subHeading}>
-              idle:
-            </Typography>
-            <Typography variant="h6" fontWeight={"bold"} className={classes.value}>
-              {performanceMeasures?.idle}
-            </Typography>
-          </div>
-          <Typography align="center" className={classes.detail}>
-            Average Idle Time of Server
-          </Typography>
-        </Card>
-        <Card sx={{ p: 1 }} elevation={2}>
-          <div className={classes.row}>
-            <Typography variant="h6" fontWeight={"bold"} className={classes.subHeading}>
-              P
-            </Typography>
-            <Typography variant="h6" fontWeight={"bold"} className={classes.value}>
-              {performanceMeasures?.p}
-            </Typography>
-          </div>
-          <Typography align="center" className={classes.detail}>
-            Average Utilization of server
-          </Typography>
-        </Card> */}
-      </div>
-    </Card>
+      <Table className={classes.table}>
+        <TableBody>
+          <TableRow>
+            <TableCell style={{ fontWeight: 700 }}>
+              L (Average Customers in System)
+            </TableCell>
+            <TableCell>{performanceMeasures?.l}</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell style={{ fontWeight: 700 }}>
+              Lq (Average Customers in Queue)
+            </TableCell>
+            <TableCell>{performanceMeasures?.lq}</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell style={{ fontWeight: 700 }}>
+              W (Average Waiting Customers in System - min)
+            </TableCell>
+            <TableCell>{performanceMeasures?.w}</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell style={{ fontWeight: 700 }}>
+              Wq (Average Waiting Customers in Queue - min)
+            </TableCell>
+            <TableCell>{performanceMeasures?.wq}</TableCell>
+          </TableRow>
+          {location.pathname === "/" &&
+            serverSpecs.map((server, i) => (
+              <TableRow key={i}>
+                <TableCell style={{ fontWeight: 700 }}>
+                  Utilization Server {i + 1}
+                </TableCell>
+                <TableCell>{server.utilization}</TableCell>
+              </TableRow>
+            ))}
+        </TableBody>
+      </Table>
+    </Box>
   );
 };
 
