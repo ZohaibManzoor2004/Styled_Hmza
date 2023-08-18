@@ -4,11 +4,6 @@ import { Customer } from "../interfaces/record";
 import {
   calculateArrivalsFromInterArrivals,
   generateRandomExponential,
-  generateServiceTimes,
-  serviceTimes as orignalServiceTime,
-  calculateInterArrivalTimes,
-  arrivalTimes as orignalArivalTimes,
-  generateNormalDistribution,
   poissonInterArrivals,
   getInterArrivalsFromRange,
 } from "../utils/common";
@@ -33,7 +28,9 @@ interface IAppContex {
   queueLengthServers: Customer[][];
   setQueueLengthServers: React.Dispatch<React.SetStateAction<Customer[][]>>;
   waitingInTheQueueServers: Customer[][];
-  setWaitingInTheQueueServers: React.Dispatch<React.SetStateAction<Customer[][]>>;
+  setWaitingInTheQueueServers: React.Dispatch<
+    React.SetStateAction<Customer[][]>
+  >;
   serverSpecs: {
     startTime: number;
     endTime: number;
@@ -55,8 +52,6 @@ interface Server {
   customers: Customer[];
 }
 
-// const MeanInterArival = 12;
-// const MeanServiceTime = 15;
 const MeanInterArival = source.MeanInterArival;
 const MeanServiceTime = source.MeanServiceTime;
 
@@ -65,12 +60,18 @@ const AppProvider: React.FC<Props> = ({ children }) => {
   const [speed, setSpeed] = React.useState(0);
   const [numberOfServers, setNumberOfServers] = React.useState(1);
   const [customerRecords, setCustomerRecords] = React.useState<Customer[]>([]);
-  const [distribution, setDistribution] = React.useState<"mmc" | "ggc" | "mgc">("mmc");
-  const [distributionInput, setDistributionInput] = React.useState<DistributionInput>({
-    c: 1,
-  });
-  const [queueLengthServers, setQueueLengthServers] = React.useState<Customer[][]>([]);
-  const [waitingInTheQueueServers, setWaitingInTheQueueServers] = React.useState<Customer[][]>([]);
+  const [distribution, setDistribution] = React.useState<"mmc" | "ggc" | "mgc">(
+    "mmc"
+  );
+  const [distributionInput, setDistributionInput] =
+    React.useState<DistributionInput>({
+      c: 1,
+    });
+  const [queueLengthServers, setQueueLengthServers] = React.useState<
+    Customer[][]
+  >([]);
+  const [waitingInTheQueueServers, setWaitingInTheQueueServers] =
+    React.useState<Customer[][]>([]);
 
   const lamda = useMemo(() => 1 / MeanInterArival, []);
   const meu = useMemo(() => 1 / MeanServiceTime, []);
@@ -82,7 +83,11 @@ const AppProvider: React.FC<Props> = ({ children }) => {
   const generate = (interArrivals: number[], serviceTimes: number[]) => {
     const arrivals = calculateArrivalsFromInterArrivals(interArrivals);
     let servers: Server[] = new Array(numberOfServers).fill({ endTime: 0 });
-    servers = servers.map((server, index) => ({ ...server, serverNum: index + 1, customers: [] }));
+    servers = servers.map((server, index) => ({
+      ...server,
+      serverNum: index + 1,
+      customers: [],
+    }));
     const customers: Customer[] = [];
 
     arrivals.forEach((_, i) => {
@@ -126,26 +131,17 @@ const AppProvider: React.FC<Props> = ({ children }) => {
   };
 
   const generateArrivals = () => {
-    // const { normalDistributionInter, normalDistributionService } = generateNormalDistribution(numberOfCustomers);
-    // console.log( normalDistributionInter, normalDistributionService)
-    // const serviceTimes = generateServiceTimes(numberOfCustomers);
-    // const interArrivals = generateServiceTimes(numberOfCustomers);
-
-    const interArrivals: number[] = [...getInterArrivalsFromRange(poissonInterArrivals(source.MeanInterArival))];
+    const interArrivals: number[] = [
+      ...getInterArrivalsFromRange(
+        poissonInterArrivals(source.MeanInterArival)
+      ),
+    ];
     const serviceTimes: number[] = [];
-    // const serviceTimes: number[] = [...getInterArrivalsFromRange(poissonInterArrivals(source.MeanServiceTime))];
-    interArrivals[0] = 0
+    interArrivals[0] = 0;
     for (let i = 0; i < interArrivals.length; i++) {
-      // interArrivals.push(generateRandomExponential(MeanInterArival));
       serviceTimes.push(generateRandomExponential(MeanServiceTime));
     }
-
-    // interArrivals[0] = 0;
-    // const serviceTimes = orignalServiceTime;
-    // const interArrivals = calculateInterArrivalTimes(orignalArivalTimes);
-
     return generate(interArrivals, serviceTimes);
-    // return generate( normalDistributionInter, normalDistributionService);
   };
 
   const serverSpecs = useMemo(() => {
@@ -157,15 +153,18 @@ const AppProvider: React.FC<Props> = ({ children }) => {
       utilizationArr: { utilization: number; arrival: number }[];
     }[] = [];
 
-    // const totalServiceTime = customerRecords.reduce((prev, curr) => (prev += curr.serviceTime!), 0);
     // @ts-ignore
-    const totalEndtimeServers: { [key: number]: number } = customerRecords.reduce((acc, curr) => {
-      // @ts-ignore
+    const totalEndtimeServers: { [key: number]: number } =
+      customerRecords.reduce((acc, curr) => {
+        // @ts-ignore
         acc[curr.server] = curr.endTime;
-      return acc;
-    }, {});
+        return acc;
+      }, {});
 
-    const totalEndtime = Object.values(totalEndtimeServers).reduce((prev, curr) => (prev += curr), 0);
+    const totalEndtime = Object.values(totalEndtimeServers).reduce(
+      (prev, curr) => (prev += curr),
+      0
+    );
     customerRecords.forEach((item) => {
       if (!item.server || !item.endTime || !item.serviceTime) return;
       const server = item.server;
@@ -181,7 +180,10 @@ const AppProvider: React.FC<Props> = ({ children }) => {
       const obj = arr[server - 1];
       obj.endTime = item.endTime;
       obj.serviceTime += item.serviceTime;
-      obj.utilizationArr.push({ utilization: (obj.serviceTime / totalEndtime) * 100, arrival: item.arrival! });
+      obj.utilizationArr.push({
+        utilization: (obj.serviceTime / totalEndtime) * 100,
+        arrival: item.arrival!,
+      });
     });
 
     arr = arr.map((item) => {
