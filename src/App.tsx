@@ -1,8 +1,8 @@
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
-import Home from "./pages/Home/Home";
+import Home from "./pages/Home";
 import AppProvider from "./context/AppContext";
-import CustomDistributions from "./pages/CustomDistributions/CustomDistributions";
+import CustomDistributions from "./components/CustomDistributions/CustomDistributions";
 import ChiSquare from "./components/ChiSquare/ChiSquare";
 
 function App() {
