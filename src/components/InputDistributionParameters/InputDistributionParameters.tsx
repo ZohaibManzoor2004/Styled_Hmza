@@ -1,6 +1,14 @@
 import React from "react";
 import { makeStyles } from "@mui/styles";
-import { Theme, MenuItem, Card, Typography, TextField, Grid, Button } from "@mui/material";
+import {
+  Theme,
+  MenuItem,
+  Card,
+  Typography,
+  TextField,
+  Grid,
+  Button,
+} from "@mui/material";
 import useApp from "../../hooks/useApp";
 import { mmc_calculation } from "./../../utils/MMC";
 import { ggc_calculation } from "./../../utils/GGC";
@@ -14,11 +22,23 @@ interface IProps {}
 
 const InputDistributionParameters: React.FC<IProps> = () => {
   const classes = useStyles();
-  const { distribution, setDistribution, distributionInput, setDistributionInput } = useApp();
-  const [performanceMeasures, setPerformanceMeasures] = React.useState<Partial<ReturnType<typeof ggc_calculation>>>({});
+  const {
+    distribution,
+    setDistribution,
+    distributionInput,
+    setDistributionInput,
+  } = useApp();
+  const [performanceMeasures, setPerformanceMeasures] = React.useState<
+    Partial<ReturnType<typeof ggc_calculation>>
+  >({});
 
-  const handleChange: React.ChangeEventHandler<HTMLTextAreaElement | HTMLInputElement> = (e) => {
-    setDistributionInput({ ...distributionInput, [e.target.name]: Number(e.target.value) });
+  const handleChange: React.ChangeEventHandler<
+    HTMLTextAreaElement | HTMLInputElement
+  > = (e) => {
+    setDistributionInput({
+      ...distributionInput,
+      [e.target.name]: Number(e.target.value),
+    });
   };
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
@@ -35,20 +55,45 @@ const InputDistributionParameters: React.FC<IProps> = () => {
       return;
     const lamda = 1 / distributionInput.meanInterArrival!;
     const meu = 1 / distributionInput.meanServiceTime!;
-    const service_time = (distributionInput.min_service_time! + distributionInput.max_service_time!) / 2;
+    const service_time =
+      (distributionInput.min_service_time! +
+        distributionInput.max_service_time!) /
+      2;
     const mean_service_time = 1 / service_time;
-    const interarrival_time = (distributionInput.min_interarrival_time! + distributionInput.max_interarrival_time!) / 2;
+    const interarrival_time =
+      (distributionInput.min_interarrival_time! +
+        distributionInput.max_interarrival_time!) /
+      2;
     const mean_interarrival_time = 1 / interarrival_time;
     const variance_service_time =
-      Math.pow(distributionInput.max_service_time! - distributionInput.min_service_time!, 2) / 12;
+      Math.pow(
+        distributionInput.max_service_time! -
+          distributionInput.min_service_time!,
+        2
+      ) / 12;
     const variance_interarrival_time =
-      Math.pow(distributionInput.max_interarrival_time! - distributionInput.min_interarrival_time!, 2) / 12;
+      Math.pow(
+        distributionInput.max_interarrival_time! -
+          distributionInput.min_interarrival_time!,
+        2
+      ) / 12;
     if (distribution === "mmc") {
       setPerformanceMeasures(mmc_calculation(lamda, meu, distributionInput.c));
     } else if (distribution === "mgc") {
-      if (!distributionInput.max_service_time && !distributionInput.min_service_time) return;
+      if (
+        !distributionInput.max_service_time &&
+        !distributionInput.min_service_time
+      )
+        return;
       setPerformanceMeasures(
-        ggc_calculation(lamda, mean_service_time, distributionInput.c, "M", variance_service_time, 1)
+        ggc_calculation(
+          lamda,
+          mean_service_time,
+          distributionInput.c,
+          "M",
+          variance_service_time,
+          1
+        )
       );
     } else if (distribution === "ggc") {
       if (
@@ -72,7 +117,7 @@ const InputDistributionParameters: React.FC<IProps> = () => {
   };
 
   return (
-    <Card sx={{ p: 2 }}>
+    <Card sx={{ p: 2, maxWidth: 700, margin: "auto" }}>
       <Typography variant="h5" fontWeight={"bold"}>
         Input Parameters
       </Typography>
