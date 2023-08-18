@@ -138,6 +138,9 @@ const ChiSquare: React.FC<IProps> = () => {
           >
             Chi-Square Test
           </Typography>
+          <Typography variant="h6" color="black" textAlign={"center"}>
+            Goodness Of Fit Test
+          </Typography>
           <Typography sx={{ mt: 2 }} color="black">
             <b>Inter Arrival Time Calculated Value</b>
           </Typography>
