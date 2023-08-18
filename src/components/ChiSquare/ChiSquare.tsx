@@ -128,9 +128,14 @@ const ChiSquare: React.FC<IProps> = () => {
 
   return (
     <div>
-      <Container sx={{ pt: "70px" }} maxWidth="lg">
+      <Container sx={{ pt: "70px" }} maxWidth="sm">
         <Card sx={{ p: 2 }}>
-          <Typography variant="h4" fontWeight="bold" color="black">
+          <Typography
+            variant="h4"
+            fontWeight="bold"
+            color="black"
+            textAlign={"center"}
+          >
             Chi-Square Test
           </Typography>
           <Typography sx={{ mt: 2 }} color="black">
