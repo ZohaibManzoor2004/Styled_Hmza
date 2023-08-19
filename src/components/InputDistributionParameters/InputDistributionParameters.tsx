@@ -1,7 +1,5 @@
 import React from "react";
-import { makeStyles } from "@mui/styles";
 import {
-  Theme,
   MenuItem,
   Card,
   Typography,
@@ -14,14 +12,9 @@ import { mmc_calculation } from "./../../utils/MMC";
 import { ggc_calculation } from "./../../utils/GGC";
 import PerformanceMeasures from "../PerformanceMeasures/PerformanceMeasures";
 
-const useStyles = makeStyles((theme: Theme) => ({
-  root: {},
-}));
-
 interface IProps {}
 
 const InputDistributionParameters: React.FC<IProps> = () => {
-  const classes = useStyles();
   const {
     distribution,
     setDistribution,

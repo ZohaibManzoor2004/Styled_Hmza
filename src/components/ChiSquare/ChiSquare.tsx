@@ -14,12 +14,8 @@ import {
 interface IProps {}
 
 const ChiSquare: React.FC<IProps> = () => {
-  const {
-    customerRecords,
-    setNumberOfCustomers,
-    numberOfCustomers,
-    generateArrivals,
-  } = useApp();
+  const { setNumberOfCustomers, numberOfCustomers, generateArrivals } =
+    useApp();
   const [chiSquareState, setChiSquare] = useState({
     interArrival: 0,
     serviceTime: 0,
@@ -58,12 +54,8 @@ const ChiSquare: React.FC<IProps> = () => {
       0
     ); //service time
 
-    const { MLEs: interArrivalMLE, sum: interObservedSum } = MLE(
-      interArrivalObservedFreqs
-    );
-    const { MLEs: serviceTimeMLE, sum: serviceObservedSum } = MLE(
-      serviceTimeObservedFreqs
-    );
+    const { sum: interObservedSum } = MLE(interArrivalObservedFreqs);
+    const { sum: serviceObservedSum } = MLE(serviceTimeObservedFreqs);
 
     const calculatedLambdaForInterArrivalTime =
       interObservedSum / observedFrequenciesSummation1;
@@ -81,20 +73,16 @@ const ChiSquare: React.FC<IProps> = () => {
         probabilityDistribution(calculatedLambdaForServiceTime, index)
       );
 
-    const {
-      expectedFreqs: interArrivalExpectedFrequencies,
-      sum: sumOfInterArrivalExpected,
-    } = getExpectedFrequenciesAndSummation(
-      observedFrequenciesSummation1,
-      InterArrivalprobabilities
-    );
-    const {
-      expectedFreqs: serviceTimeExpectedFrequencies,
-      sum: sumOserviceTimeExpected,
-    } = getExpectedFrequenciesAndSummation(
-      observedFrequenciesSummation2,
-      serviceTimeprobabilities
-    );
+    const { expectedFreqs: interArrivalExpectedFrequencies } =
+      getExpectedFrequenciesAndSummation(
+        observedFrequenciesSummation1,
+        InterArrivalprobabilities
+      );
+    const { expectedFreqs: serviceTimeExpectedFrequencies } =
+      getExpectedFrequenciesAndSummation(
+        observedFrequenciesSummation2,
+        serviceTimeprobabilities
+      );
 
     const interArrivalChiSquare = chiSquare(
       interArrivalExpectedFrequencies,

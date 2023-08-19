@@ -174,47 +174,6 @@ export const generateNormalDistribution = (numOfCustomers: number) => {
   return { normalDistributionService, normalDistributionInter };
 };
 
-//usage chiSquareTableee.get(dof);
-const chiSquareTableee = new Map([
-  [1, 3.8415],
-  [2, 5.9915],
-  [3, 7.8147],
-  [4, 9.4877],
-  [5, 11.0705],
-  [6, 12.5916],
-  [7, 14.0671],
-  [8, 15.5073],
-  [9, 16.919],
-  [10, 18.307],
-  [11, 19.6751],
-  [12, 21.0261],
-  [13, 22.362],
-  [14, 23.6848],
-  [15, 25.005],
-  [16, 26.2962],
-  [17, 27.5871],
-  [18, 28.8693],
-  [19, 30.1435],
-  [20, 31.4104],
-  [21, 32.6706],
-  [22, 33.9244],
-  [23, 35.1725],
-  [24, 36.415],
-  [25, 37.6525],
-  [26, 38.8851],
-  [27, 40.1133],
-  [28, 41.3372],
-  [29, 42.557],
-  [30, 51.8051],
-  [40, 63.1671],
-  [50, 74.397],
-  [60, 85.5271],
-  [70, 96.5782],
-  [80, 107.565],
-  [90, 118.498],
-  [100, 124.342],
-]);
-
 export const chiSquareObservedFreqs = (data: number[], numBins: number) => {
   // Calculate the range of the data
   const dataMin = Math.min(...data);

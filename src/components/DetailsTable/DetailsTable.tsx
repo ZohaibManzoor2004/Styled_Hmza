@@ -1,18 +1,21 @@
 import React from "react";
-import { makeStyles } from "@mui/styles";
-import { Theme, Card, TableBody, TableContainer, Table, TableRow, TableHead, TableCell } from "@mui/material";
+import {
+  Card,
+  TableBody,
+  TableContainer,
+  Table,
+  TableRow,
+  TableHead,
+  TableCell,
+} from "@mui/material";
 import useApp from "../../hooks/useApp";
-
-const useStyles = makeStyles((theme: Theme) => ({
-  root: {},
-}));
 
 interface IProps {}
 
 const DetailsTable: React.FC<IProps> = () => {
   const { customerRecords, speed } = useApp();
   const [records, setRecords] = React.useState<typeof customerRecords>([]);
-  const classes = useStyles();
+
   const ref = React.useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
@@ -36,12 +39,12 @@ const DetailsTable: React.FC<IProps> = () => {
   }, [customerRecords]);
 
   return (
-    <Card className={classes.root} sx={{ mt: 2, p: 2 }}>
+    <Card sx={{ mt: 2, p: 2 }}>
       <TableContainer ref={ref} sx={{ maxHeight: 400 }}>
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell title="Customer Number"  align="center">
+              <TableCell title="Customer Number" align="center">
                 <b>C</b>#
               </TableCell>
               <TableCell title="Arrival Time" align="center">
@@ -50,7 +53,7 @@ const DetailsTable: React.FC<IProps> = () => {
               <TableCell title="Interarrival Time" align="center">
                 <b>Interarrival (min)</b>
               </TableCell>
-              <TableCell  title="Service Time" align="center">
+              <TableCell title="Service Time" align="center">
                 <b>Service (min)</b>
               </TableCell>
               <TableCell title="Start Time" align="center">

@@ -1,33 +1,12 @@
 import React from "react";
-import { makeStyles } from "@mui/styles";
-import {
-  Theme,
-  Card,
-  Typography,
-  Grid,
-  TextField,
-  MenuItem,
-  Button,
-} from "@mui/material";
+import { Card, Typography, Grid, TextField, Button } from "@mui/material";
 import useApp from "../../hooks/useApp";
-
-const useStyles = makeStyles((theme: Theme) => ({
-  root: {},
-}));
 
 interface IProps {}
 
 const InputParameters: React.FC<IProps> = () => {
-  const classes = useStyles();
-  const {
-    numberOfCustomers,
-    numberOfServers,
-    setNumberOfServers,
-    setNumberOfCustomers,
-    speed,
-    setSpeed,
-    generateArrivals,
-  } = useApp();
+  const { numberOfServers, setNumberOfServers, setSpeed, generateArrivals } =
+    useApp();
   setSpeed(1);
   return (
     <Card sx={{ p: 2 }}>
