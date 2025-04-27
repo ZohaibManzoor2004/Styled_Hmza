@@ -17,15 +17,15 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'  # Use the same version as your local development
-          cache: 'npm'  # Caches node_modules for faster builds
+          node-version: '20'  # Same as your local development
+          cache: 'npm'        # Cache node_modules for faster builds
 
       - name: Install dependencies
         run: |
           npm config set registry https://registry.npmjs.org/
           npm cache clean --force
-          npm install --legacy-peer-deps  # Bypasses peer dependency conflicts
-          
+          npm install --legacy-peer-deps
+
       - name: Build project
         run: npm run build
 
@@ -34,13 +34,15 @@ jobs:
         with:
           name: production-files
           path: ./dist
-          retention-days: 1  # Automatically deletes artifact after 1 day
+          retention-days: 1
 
   deploy:
     name: Deploy
     needs: build
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
+    env:
+      GITHUB_TOKEN: ${{ secrets.STYLED_HMZA_SECRET }}
 
     steps:
       - name: Download artifact
@@ -52,5 +54,5 @@ jobs:
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ env.GITHUB_TOKEN }}
           publish_dir: ./dist
