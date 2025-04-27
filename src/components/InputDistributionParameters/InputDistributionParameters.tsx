@@ -160,7 +160,7 @@ const InputDistributionParameters: React.FC<IProps> = () => {
             </>
           )}
           <Grid item sm={6} md={4}>
-            <TextField
+            {/* <TextField
               value={distributionInput.c}
               name="c"
               onChange={handleChange}
@@ -169,7 +169,7 @@ const InputDistributionParameters: React.FC<IProps> = () => {
               fullWidth
               variant="standard"
               label="Number of Servers"
-            />
+            /> */}
           </Grid>
           {distribution === "mgc" && (
             <Grid item sm={6} md={4}>

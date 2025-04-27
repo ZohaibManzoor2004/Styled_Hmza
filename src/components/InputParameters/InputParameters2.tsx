@@ -9,14 +9,14 @@ interface Props {
 export const ComponentX = ({ title }: Props) => {
   return <h1>{title}</h1>;  // Or any other JSX
 };
-const InputParameters: React.FC<IProps> = () => {
+const InputParameters2: React.FC<IProps> = () => {
   const { numberOfServers, setNumberOfServers, setSpeed, generateArrivals, } =
     useApp();
   setSpeed(1);
   return (
     <Card sx={{ p: 2 }}>
       <Typography variant="h5" fontWeight={"bold"}>
-        {}
+        Simulator For Random Arrivals and Service Time
       </Typography>
       <Grid container spacing={2} sx={{ pt: 2 }}>
         {/* <Grid item xs={12} sm={6} md={4}>
@@ -58,7 +58,7 @@ const InputParameters: React.FC<IProps> = () => {
         <Grid item xs={12} sm={4} md={4}>
           <div className="flex">
             <Button onClick={generateArrivals} variant="outlined" style={{backgroundColor:"#556B2F" , color:"white"}}>
-              Set No of Servers for Calculator
+              Run Simulator for Given Number of Servers
             </Button>
           </div>
         </Grid>
@@ -67,4 +67,4 @@ const InputParameters: React.FC<IProps> = () => {
   );
 };
 
-export default InputParameters;
+export default InputParameters2;

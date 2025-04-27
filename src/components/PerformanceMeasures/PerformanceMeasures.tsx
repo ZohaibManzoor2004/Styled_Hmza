@@ -1,4 +1,5 @@
 import React from "react";
+import icon from '/assets/perf_measures.webp';
 import { makeStyles } from "@mui/styles";
 import {
   Table,
@@ -15,10 +16,15 @@ import { useLocation } from "react-router";
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
-    marginTop: theme.spacing(6),
+    marginTop: theme.spacing(6),//space b/t performance measure and table
     display: "flex",
+    backgroundColor:"white",
     flexDirection: "column",
     alignItems: "center",
+    //backgroundImage:"icon.png",
+    borderRadius:"3%",
+    backgroundImage: `url(${icon})`,
+    backgroundPosition: "center",     // optional, centers the image
   },
   table: {
     marginTop: theme.spacing(2),
@@ -46,33 +52,33 @@ const PerformanceMeasures: React.FC<IProps> = ({ performanceMeasures }) => {
   return (
     <Box className={classes.root}>
       <Typography fontWeight={"bold"} variant="h5" gutterBottom>
-        Performance Measures
+       <h1> Performance Measures</h1>
       </Typography>
       <Table className={classes.table}>
         <TableBody>
           <TableRow>
-            <TableCell style={{ fontWeight: 700 }}>
-              L (Average Customers in System)
+            <TableCell style={{ fontWeight:700 }}>
+             <h2> L (Average Customers in System) </h2>
             </TableCell>
-            <TableCell>{performanceMeasures?.l}</TableCell>
+            <TableCell><h2>{performanceMeasures?.l}</h2></TableCell>
           </TableRow>
           <TableRow>
             <TableCell style={{ fontWeight: 700 }}>
-              Lq (Average Customers in Queue)
+              <h2>Lq (Average Customers in Queue)</h2>
             </TableCell>
-            <TableCell>{performanceMeasures?.lq}</TableCell>
+            <TableCell><h2>{performanceMeasures?.lq}</h2></TableCell>
           </TableRow>
           <TableRow>
             <TableCell style={{ fontWeight: 700 }}>
-              W (Average Waiting Customers in System - min)
+              <h2>W (Average Waiting Customers in System - min)</h2>
             </TableCell>
-            <TableCell>{performanceMeasures?.w}</TableCell>
+            <TableCell><h2>{performanceMeasures?.w}</h2></TableCell>
           </TableRow>
           <TableRow>
             <TableCell style={{ fontWeight: 700 }}>
-              Wq (Average Waiting Customers in Queue - min)
+              <h2>Wq (Average Waiting Customers in Queue - min)</h2>
             </TableCell>
-            <TableCell>{performanceMeasures?.wq}</TableCell>
+            <TableCell><h2>{performanceMeasures?.wq}</h2></TableCell>
           </TableRow>
           {location.pathname === "/" &&
             serverSpecs.map((server, i) => (

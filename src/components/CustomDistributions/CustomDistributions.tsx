@@ -6,10 +6,13 @@ interface IProps {}
 
 const CustomDistributions: React.FC<IProps> = () => {
   return (
-    <div>
+    <div style={{ color: "black", padding: "20px" }}>
       <Container sx={{ pt: "70px" }} maxWidth="lg">
         <Typography fontWeight={700} variant="h4" textAlign={"center"}>
-          Custom Distributions
+          <div style={{backgroundColor:"White",
+                       display: "inline-block",
+                       borderRadius:"3%",
+                       border:"1px solid black"}}>Calculator</div>
         </Typography>
         <InputDistributionParameters />
       </Container>

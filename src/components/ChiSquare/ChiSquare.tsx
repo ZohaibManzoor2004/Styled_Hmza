@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import icon from '/assets/chi_square.jpg';
 import { Card, Typography } from "@mui/material";
 import Container from "@mui/material/Container/Container";
 import useApp from "../../hooks/useApp";
@@ -117,7 +118,14 @@ const ChiSquare: React.FC<IProps> = () => {
   return (
     <div>
       <Container sx={{ pt: "70px" }} maxWidth="sm">
-        <Card sx={{ p: 2 }}>
+        <Card sx={{ p: 2 ,
+        backgroundImage: `url(${icon})`,
+        backgroundSize: 'cover',
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: 'center',
+                    
+    
+        }}>
           <Typography
             variant="h4"
             fontWeight="bold"
@@ -138,7 +146,11 @@ const ChiSquare: React.FC<IProps> = () => {
           </Typography>
           <Typography>{chiSquareState.serviceTime}</Typography>
           <Typography color="black">
-            <b>Critical Value</b>
+            <b>Critical Value (at significance Level α : 0.05)</b>
+          </Typography>
+          <Typography>9.488</Typography>
+          <Typography color="black">
+            <b>Calculated Value</b>
           </Typography>
           <Typography>{chiSquareState.critical}</Typography>
           <Typography sx={{ mt: 2 }}>

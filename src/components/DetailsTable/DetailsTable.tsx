@@ -1,4 +1,5 @@
 import React from "react";
+import icon from "/assets/Detail_table.jpg";
 import {
   Card,
   TableBody,
@@ -14,6 +15,7 @@ interface IProps {}
 
 const DetailsTable: React.FC<IProps> = () => {
   const { customerRecords, speed } = useApp();
+  // console.log({customerRecords});
   const [records, setRecords] = React.useState<typeof customerRecords>([]);
 
   const ref = React.useRef<HTMLDivElement>(null);
@@ -33,19 +35,23 @@ const DetailsTable: React.FC<IProps> = () => {
         }
         return prev;
       });
-    }, 500 / speed);
+    }, 1 / speed);
 
     return () => clearInterval(interval);
   }, [customerRecords]);
 
   return (
     <Card sx={{ mt: 2, p: 2 }}>
-      <TableContainer ref={ref} sx={{ maxHeight: 400 }}>
-        <Table>
+      <TableContainer ref={ref} sx={{ maxHeight: 700 }}>
+        <Table style={{backgroundImage: `url(${icon})` ,
+                      backgroundRepeat: "no-repeat",
+                      backgroundSize: "cover", // or "contain", based on your need
+                      //backgroundPosition: "center"
+}}>
           <TableHead>
             <TableRow>
               <TableCell title="Customer Number" align="center">
-                <b>C</b>#
+                <b>Customer</b>#
               </TableCell>
               <TableCell title="Arrival Time" align="center">
                 <b>Arrival (min)</b>
